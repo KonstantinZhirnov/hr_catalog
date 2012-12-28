@@ -5,7 +5,7 @@
  * @author Konstantin Zhirnov
  * @todo добавить исключения для папок, файлов и расширений
  */
-class CoreLoader {
+class coreLoader {
 	
 	private static $basePath;
 	private static $excludeDirs = array();
@@ -55,23 +55,7 @@ class CoreLoader {
 	
 	
 	private static function loader($name) {
-    $existsArray = array();
-    
-    $fileName = $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . 'classes.cache';
-    
-    if(file_exists($fileName)) {
-      $content = file_get_contents($fileName);
-      $existsArray = unserialize($content);
-    }
-    
-    if(array_key_exists($name, $existsArray)) {
-      $path = $existsArray[$name];
-    } else {
-      $path = self::fileSearch(self::$basePath, $name);
-      $existsArray[$name] = $path;
-      file_put_contents($fileName, serialize($existsArray));
-    }
-
+		$path = self::fileSearch(self::$basePath, $name);
 		if(file_exists($path)){
 			require_once $path;
 		}
