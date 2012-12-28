@@ -5,7 +5,7 @@
  * @author Konstantin Zhirnov
  * @todo добавить исключения для папок, файлов и расширений
  */
-class CoreLoader {
+class coreLoader {
 	
 	private static $basePath;
 	private static $excludeDirs = array();
@@ -47,7 +47,7 @@ class CoreLoader {
 		}
 		
 		if(is_array($array)) {
-			self::$propertyName =array_merge(self::$propertyName, $array);
+			self::$propertyName = array_merge(self::$propertyName, $array);
 		} else {
 			self::$propertyName->push($array);
 		}
@@ -55,23 +55,21 @@ class CoreLoader {
 	
 	
 	private static function loader($name) {
-    $existsArray = array();
-    
-    $fileName = $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . 'classes.cache';
+    $fileName = $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . "classes.cache";
+    $classesArray = array();
     
     if(file_exists($fileName)) {
-      $content = file_get_contents($fileName);
-      $existsArray = unserialize($content);
+      $classesArray = unserialize(file_get_contents($fileName));
     }
     
-    if(array_key_exists($name, $existsArray)) {
-      $path = $existsArray[$name];
+    if(array_key_exists($name, $classesArray)) {
+      $path = $classesArray[$name];
     } else {
       $path = self::fileSearch(self::$basePath, $name);
-      $existsArray[$name] = $path;
-      file_put_contents($fileName, serialize($existsArray));
+      $classesArray[$name] = $path;
+      file_put_contents($fileName, serialize($classesArray));
     }
-
+    
 		if(file_exists($path)){
 			require_once $path;
 		}
