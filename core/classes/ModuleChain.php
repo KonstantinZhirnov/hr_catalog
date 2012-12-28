@@ -28,7 +28,7 @@ class ModuleChain {
 	 * @access public
 	 */
 	public function Process() {
-		foreach($modules as $key => $module) {
+		foreach($this->modules as $module) {
 			$module->Run();
 		}
 	}
