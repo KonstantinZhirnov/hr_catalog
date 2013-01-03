@@ -4,7 +4,7 @@
  *
  * @author Konstantin Zhirnov
  */
-class System implements ISingletone{
+class System implements ISingleton{
   
   private static $variables = array();
   private static $instance = null;

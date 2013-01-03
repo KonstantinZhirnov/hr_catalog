@@ -4,7 +4,7 @@
  *
  * @author keen_lad
  */
-interface ISingletone {
+interface ISingleton {
   static function getInstance($param);
 }
 

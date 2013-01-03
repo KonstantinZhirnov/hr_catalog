@@ -4,7 +4,7 @@
  *
  * @author keen_lad
  */
-class Config implements ISingletone {
+class Config implements ISingleton {
   private static $configItems = array();
   private static $instance = null;
   
