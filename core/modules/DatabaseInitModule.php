@@ -6,7 +6,7 @@
  */
 class DatabaseInitModule implements IModule {
   /**
-   * implementationn of IModule interface
+   * implementation of IModule interface
    */
   public function Run() {
     $database = iDatabase_mysqli::getInstance();

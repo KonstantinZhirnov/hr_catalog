@@ -1,4 +1,4 @@
 <?php
 require_once ("CoreLoader.php");
-CoreLoader::Init();
+CoreLoader::Init($_SERVER['DOCUMENT_ROOT']);
 ?>

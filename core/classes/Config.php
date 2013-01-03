@@ -20,15 +20,11 @@ class Config implements ISingleton {
 
   private function __construct($path = null) {
     $filePath = $path ? System::$basePath . $path : System::$basePath . 'config/config.php';
-    Log::Show(System::$basePath);
-    Log::Show($filePath);
-    Log::Show(file_exists($filePath), true);
     
     if(file_exists($filePath)) {
       require_once $filePath;
     }
-    
-    Log::Show($config);
+
     foreach ($config as $item => $value) {
       $this->$item = $value;
     }

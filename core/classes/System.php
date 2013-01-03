@@ -44,6 +44,8 @@ class System implements ISingleton{
     } else {
       if(isset(self::$variables[$name])) {
         return self::$variables[$name];
+      } elseif (class_exists($name) && array_key_exists('ISingleton', class_implements($name))) {
+        return $name::getInstance();
       }
 
       return null;
