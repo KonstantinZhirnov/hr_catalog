@@ -6,3 +6,4 @@ Log::Show(Helper::getGUID(true));
 
 Log::Show(System::CurrentUser());
 Log::Show(System::CurrentUser()->isUserValid(), true);
+?>

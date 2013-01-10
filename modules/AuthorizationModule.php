@@ -9,8 +9,9 @@ class AuthorizationModule implements IModule {
   
   public function Run() {
     if(!$this->isLoggedIn()) {
-      if(!$this->login())
+      if(!$this->login()) {
         Log::Show('You need to authorize');
+      }
     }
   }
   
@@ -30,6 +31,7 @@ class AuthorizationModule implements IModule {
     $user = User::login($_REQUEST['login'], $_REQUEST['password']);
     $_SESSION['current_user'] = $user;
     $this->addUserToSession();
+    return true;
   }
   
   private function addUserToSession() {

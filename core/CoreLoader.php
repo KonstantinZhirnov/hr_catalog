@@ -5,7 +5,7 @@
  * @author Konstantin Zhirnov
  * @todo добавить исключения для папок, файлов и расширений
  */
-class coreLoader {
+class CoreLoader {
 	
 	private static $basePath;
 	private static $excludeDirs = array();

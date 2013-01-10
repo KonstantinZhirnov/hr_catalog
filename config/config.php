@@ -2,10 +2,10 @@
 
 $config = array(
     'database' => array(
-        'server' => 'localhost',
-        'name' => 'hr_database',
-        'user' => 'root',
-        'password' => 'root'
+        'server' => '192.168.246.180',
+        'name' => 'ilogos_ua_hr',
+        'user' => 'hr_u',
+        'password' => '6dhxYQyeZvJz3vsF'
     ),
     'loginExpTime' => 60 * 10,
 );

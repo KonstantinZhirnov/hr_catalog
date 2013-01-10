@@ -1,5 +1,5 @@
 <?php
-require_once 'core/coreInitializer.php';
+require_once 'core/CoreInitializer.php';
 
 
 $modules = new ModuleChain();
