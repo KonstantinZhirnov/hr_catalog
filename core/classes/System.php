@@ -30,12 +30,12 @@ class System implements ISingleton{
     self::$name($value);
   }
   
-  public function __callStatic($name, $arguments = null) {
-    return self::addPropertie($name, $arguments[0]);
+  public static function __callStatic($name, $arguments = null) {
+    return self::addPropertie($name, $arguments?$arguments[0]:null);
   }
   
   public function __call($name, $arguments = null) {
-    return self::addPropertie($name, $arguments[0]);
+    return self::addPropertie($name, $arguments?$arguments[0]:null);
   }
   
   private static function addPropertie($name, $value = null) {

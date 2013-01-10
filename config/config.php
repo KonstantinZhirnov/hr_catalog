@@ -7,10 +7,7 @@ $config = array(
         'user' => 'root',
         'password' => 'root'
     ),
-    'memcache' => array(
-        'server' => 'localhost',
-        'port' => '11211'
-    )
+    'loginExpTime' => 60 * 10,
 );
 
 if(file_exists('config.local.php')) {

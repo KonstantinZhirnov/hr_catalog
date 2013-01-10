@@ -34,7 +34,7 @@ class Config implements ISingleton {
       return self::$configItems[$name];
   }
   
-  protected function __set($name, $value) {
+  public function __set($name, $value) {
     self::$configItems[$name] = $value;
   }
 }

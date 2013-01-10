@@ -1,6 +1,8 @@
 <?php
 require_once 'AppInit.php';
 
-$user = new User('keen', 'lad');
+Log::Show(Helper::getGUID());
+Log::Show(Helper::getGUID(true));
 
-Log::Show($user);
+Log::Show(System::CurrentUser());
+Log::Show(System::CurrentUser()->isUserValid(), true);
