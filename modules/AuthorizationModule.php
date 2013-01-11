@@ -10,11 +10,9 @@ class AuthorizationModule implements IModule {
   public function Run() {
     if(!$this->isLoggedIn()) {
       if(!$this->login()) {
-        Log::Show('You need to authorize');
+        die('You need to authorize');
       }
-    } elseif (!System::CurrentUser()->isUserValid()) {
-      $this->login();
-    }
+    } 
   }
   
   public function __construct() {
@@ -23,7 +21,16 @@ class AuthorizationModule implements IModule {
   }
   
   private function isLoggedIn() {
-    return System::CurrentUser() != null && System::CurrentUser()->isUserValid() && System::CurrentUser()->authKey == $_REQUEST['authKey'];
+    $isLoggedIn = true;
+    if(System::CurrentUser() == null) {
+      $isLoggedIn = false;
+    } elseif (!System::CurrentUser()->isUserValid()) {
+      $isLoggedIn = false;
+    } elseif (isset($_REQUEST['authKey']) && System::CurrentUser()->authKey != $_REQUEST['authKey']) {
+      $isLoggedIn = false;
+    }
+    
+    return $isLoggedIn;
   }
   
   private function login() {
