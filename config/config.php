@@ -10,7 +10,7 @@ $config = array(
     'loginExpTime' => 60 * 10,
 );
 
-if(file_exists('config.local.php')) {
-  require_once 'config.local.php';
+if(file_exists($_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . 'config/config.local.php')) {
+  require_once $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . 'config/config.local.php';
 }
 ?>
