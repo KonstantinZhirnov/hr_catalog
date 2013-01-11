@@ -53,7 +53,11 @@ class User {
    * @param string $login user login 
    * @param string $password hache of user password 
    */
-  public function __construct($login, $password) {
+  public function __construct($login = null, $password = null) {
+    
+    if(func_num_args() == 0)
+      return;
+    
     $this->login = $login;
     $this->password = $password;
     
@@ -66,6 +70,22 @@ class User {
       $this->authKey = $userInfo['auth_key'];
       $this->authExpired = $userInfo['auth_expire'];
     }
+  }
+  
+  private function userFill(Array $userInfo) {
+    $roles = UserRoles::getInstance();
+    
+    $this->id = $userInfo['id'];
+    $this->login = $userInfo['login'];
+    $this->password = $userInfo['password'];
+    $this->role = $roles->getRole($userInfo['role_id']);
+    $this->lastLoginTime = $userInfo['last_login'];
+    $this->authKey = $userInfo['auth_key'];
+    $this->authExpired = $userInfo['auth_expire'];
+  }
+  
+  public function __get($name) {
+    return $this->$name;
   }
   
   /**
@@ -159,6 +179,42 @@ class User {
     return $user != null;
   }
   
+  /**
+   * Update authKey in database
+   */
+  public function updateAuthKey() {
+    $user = self::login($this->login, $this->password);
+    if($user) {
+      $this->authKey = $user->authKey;
+      $this->authExpired = $user->authExpired;
+    }
+  }
+  
+  /**
+   * Get user from database by authKey
+   * @param string $authKey authKey for user search
+   * @return User if authKey is invalid or expire return null
+   */
+  public static function getUserByKey($authKey) {
+    $user = null;
+    
+    $dbResult = System::database()->query('select u.*
+      from :table_users u 
+      where u.`auth_key` = :auth_key
+        and u.`auth_expire` >= UNIX_TIMESTAMP()');
+    
+    $dbResult->bindTable(':table_users', TABLE_USERS);
+    $dbResult->bindValue(':auth_key', $authKey);
+    $dbResult->execute();
+    
+    if($dbResult->numberOfRows() > 0) {
+      $result = $dbResult->toArray();
+      $user = new User();
+      $user->userFill($result);
+    }
+    
+    return $user;
+  }
 }
 
 ?>

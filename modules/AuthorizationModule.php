@@ -12,6 +12,8 @@ class AuthorizationModule implements IModule {
       if(!$this->login()) {
         Log::Show('You need to authorize');
       }
+    } elseif (!System::CurrentUser()->isUserValid()) {
+      $this->login();
     }
   }
   
@@ -21,22 +23,36 @@ class AuthorizationModule implements IModule {
   }
   
   private function isLoggedIn() {
-    return System::CurrentUser() != null;
+    return System::CurrentUser() != null && System::CurrentUser()->isUserValid() && System::CurrentUser()->authKey == $_REQUEST['authKey'];
   }
   
   private function login() {
-    if(!isset($_REQUEST['login']))
-      return false;
+    $user = null;
+    if(isset($_REQUEST['login']))
+    {    
+      $user = User::login($_REQUEST['login'], $_REQUEST['password']);
+    } elseif(isset($_REQUEST['authKey'])) {
+      $user = User::getUserByKey($_REQUEST['authKey']);
+      if($user) {
+        $user = User::login($user->login, $user->password);
+      }
+    }
+    if($user) {
+      $this->addUserToSession($user);
+      return true;
+    }
     
-    $user = User::login($_REQUEST['login'], $_REQUEST['password']);
-    $_SESSION['current_user'] = $user;
-    $this->addUserToSession();
-    return true;
+    return false;
   }
   
-  private function addUserToSession() {
-    if(isset($_SESSION['current_user']))
+  private function addUserToSession($user = null) {
+    if($user) {
+      $_SESSION['current_user'] = $user;
+    }
+    
+    if(isset($_SESSION['current_user'])) {
       System::CurrentUser($_SESSION['current_user']);
+    }
   }
 }
 
