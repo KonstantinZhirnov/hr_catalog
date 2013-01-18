@@ -34,6 +34,15 @@ class Helper {
     }
     return $result;
   }
+  
+  /**
+   * retrieve MD5 hash of data
+   * @param string $data string for hash creating
+   * @return string
+   */
+  public static function getMd5Hash($data) {
+    return md5($data);
+  }
 }
 
 ?>

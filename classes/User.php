@@ -93,12 +93,19 @@ class User {
    */
   public function saveToDatabase() {
     if($this->id != 0) {
-      $dbResult = System::database()->query('update :table_users set `role_id` = :role_id, `login` = :login, `password` = :password, `auth_key` = :auth_key, `auth_expire` = :auth_expire
+      $dbResult = System::database()->query('update :table_users 
+        set `role_id` = :role_id, 
+          `login` = :login, 
+          `password` = :password, 
+          `auth_key` = :auth_key, 
+          `auth_expire` = :auth_expire, 
+          `last_login` = :last_login
         where `id` = :id');
       
       $dbResult->bindInt(':id', $this->id);
       $dbResult->bindValue(':auth_key', $this->authKey);
       $dbResult->bindInt(':auth_expire', $this->authExpired);
+      $dbResult->bindInt(':last_login', $this->lastLoginTime);
     } else {
       $dbResult = System::database()->query('insert into :table_users (`role_id`, `login`, `password`)
         values (:role_id, :login, :password);');
@@ -168,6 +175,11 @@ class User {
     $user->saveToDatabase();
     
     return $user;
+  }
+  
+  public function logout() {
+    $this->authKey = '';
+    $this->saveToDatabase();
   }
   
   /**

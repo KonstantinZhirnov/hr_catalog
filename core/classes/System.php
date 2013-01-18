@@ -39,7 +39,7 @@ class System implements ISingleton{
   }
   
   private static function addPropertie($name, $value = null) {
-    if($value) {
+    if($value !== null) {
       self::$variables[$name] = $value;
     } else {
       if(isset(self::$variables[$name])) {

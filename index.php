@@ -1,7 +1,17 @@
 <?php
 require_once 'AppInit.php';
 
+$headers = new HeaderBlock();
+print $headers->render();
+
+$loginBlock = new LoginBlock();
+print $loginBlock->render();
+
 Log::Show(System::CurrentUser());
-Log::Show(System::CurrentUser()->isUserValid(), true);
-Log::Show(User::getUserByKey(System::CurrentUser()->authKey));
+
+
+$footer = new FooterBlock();
+$footer->render()
+
+
 ?>

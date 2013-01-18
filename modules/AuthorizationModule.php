@@ -1,21 +1,31 @@
 <?php
-
 /**
  * module for login
  *
  * @author Konstantin Zhirnov
  */
-class AuthorizationModule implements IModule {
+class AuthorizationModule implements IModule, ISingleton {
+  
+  private static $instance = null;
   
   public function Run() {
     if(!$this->isLoggedIn()) {
       if(!$this->login()) {
-        die('You need to authorize');
+        return false;
       }
     } 
+    return true;
   }
   
-  public function __construct() {
+  public static function getInstance($param = null) {
+    if(self::$instance === null) {
+      self::$instance = new AuthorizationModule($param);
+    }
+    
+    return self::$instance;
+  }
+  
+  private function __construct() {
     session_start();
     $this->addUserToSession();
   }
@@ -37,7 +47,7 @@ class AuthorizationModule implements IModule {
     $user = null;
     if(isset($_REQUEST['login']))
     {    
-      $user = User::login($_REQUEST['login'], $_REQUEST['password']);
+      $user = User::login($_REQUEST['login'], Helper::getMd5Hash($_REQUEST['password']));
     } elseif(isset($_REQUEST['authKey'])) {
       $user = User::getUserByKey($_REQUEST['authKey']);
       if($user) {
@@ -50,6 +60,11 @@ class AuthorizationModule implements IModule {
     }
     
     return false;
+  }
+  
+  public function logout() {
+    $_SESSION['current_user'] = null;
+    System::CurrentUser(false);
   }
   
   private function addUserToSession($user = null) {
