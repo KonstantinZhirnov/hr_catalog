@@ -26,7 +26,8 @@ class AuthorizationModule implements IModule, ISingleton {
   }
   
   private function __construct() {
-    session_start();
+    if(session_id() == '')
+      session_start();
     $this->addUserToSession();
   }
   

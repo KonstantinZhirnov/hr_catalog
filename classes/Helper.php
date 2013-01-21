@@ -43,6 +43,67 @@ class Helper {
   public static function getMd5Hash($data) {
     return md5($data);
   }
+  
+  /**
+   * check is string start with defined chars
+   * @param string $haystack string for search
+   * @param string $needle searched characters
+   * @return bool true if string start with needle characters
+   */
+  public static function startsWith($haystack, $needle)
+  {
+    return !strncmp(strtolower($haystack), strtolower($needle), strlen($needle));
+  }
+
+  /**
+   * check is string end with defined chars
+   * @param string $haystack string for search
+   * @param string $needle searched characters
+   * @return bool true if string end with needle characters
+   */
+  public static function endsWith($haystack, $needle)
+  {
+    $length = strlen($needle);
+    if ($length == 0) {
+        return true;
+    }
+
+    return (substr(strtolower($haystack), -$length) === strtolower($needle));
+  }
+  
+  /**
+   * Add conditions to specified SQL query
+   * @param iDtabase_Result $dbResult
+   * @param array $conditions
+   */
+  public static function addSqlConditions (&$dbResult, $conditions) {
+    if($dbResult && $conditions && is_array($conditions)) {
+      $separator = ',';
+      
+      if(Helper::startsWith($dbResult->sql_query, 'select')) {
+        $separator = ' and';
+      }
+      
+      end($conditions);
+      $lastElementKey = key($conditions);
+      foreach($conditions as $key => $value) {
+        if($key == $lastElementKey) {
+          $separator = '';
+        }
+        
+        $condition = "=";
+        if(is_array($value)) {
+          if(isset($value['condition'])) {
+            $condition = $value['condition'];
+          }
+          $value = $value['value'];
+        }
+        
+        $dbResult->appendQuery(" `{$key}` {$condition} :{$key}{$separator}");
+        $dbResult->bindValue(":{$key}", $value);
+      }
+    }
+  }
 }
 
 ?>

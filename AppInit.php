@@ -1,5 +1,6 @@
 <?php
 require_once 'core/CoreInitializer.php';
+session_start();
 
 
 $modules = new ModuleChain();

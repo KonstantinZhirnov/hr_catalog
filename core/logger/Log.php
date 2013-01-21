@@ -18,8 +18,10 @@ class Log {
 	 * @param bool $rewrite is file need be cleared
 	 */
 	public static function Save($log_data = null, $rewrite = false, $comment = false, $fname = '') {
-		mkdir(dirname(__FILE__) . '/../../logs');
-		$fh  = fopen(dirname(__FILE__) . '/../../logs/!_' . (($fname == '') ? 'log' : $fname) . '.log', ($rewrite === true) ? "w+": "a+");
+    if(!file_exists($_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . 'logs')) {
+      mkdir($_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . 'logs');
+    }
+		$fh  = fopen($_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . 'logs/!_' . (($fname == '') ? 'log' : $fname) . '.log', ($rewrite === true) ? "w+": "a+");
 		fwrite($fh, date('[D M d H:i:s Y]'));
 		if ($comment) {
 			fwrite($fh, " $comment\n");
