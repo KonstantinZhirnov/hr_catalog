@@ -16,7 +16,7 @@ class DatabaseTableInitModule implements IModule {
     define('TABLE_EMPLOEES', 'emploees');
     define('TABLE_EMPLOEE_CONTACTS', 'emploee_contacts');
     define('TABLE_EMPLOEE_STATUSES', 'emploee_statuses');
-    define('TABLE_QULIFICATIONS', 'qualifications');
+    define('TABLE_QUALIFICATIONS', 'qualifications');
     define('TABLE_REGIONS', 'regions');
     define('TABLE_USERS', 'users');
     define('TABLE_USER_ROLES', 'user_roles');
