@@ -87,6 +87,10 @@ class Helper {
       end($conditions);
       $lastElementKey = key($conditions);
       foreach($conditions as $key => $value) {
+        if(!is_numeric($value) && empty($value)) {
+          continue;
+        }
+        
         if($key == $lastElementKey) {
           $separator = '';
         }

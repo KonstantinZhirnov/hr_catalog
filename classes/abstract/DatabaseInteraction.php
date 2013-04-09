@@ -24,7 +24,7 @@ abstract class DatabaseInteraction {
 
 
   public function __construct() {
-     static::$_database = System::database();
+     self::$_database = System::database();
   }
   
   /**
@@ -32,13 +32,13 @@ abstract class DatabaseInteraction {
    * @param array $conditions conditions for retrieve database record.
    */
   protected function getFromDB($conditions) {
-    static::$_dbResult = static::$_database->query("select * from :db_table");
-    static::$_dbResult->bindTable(":db_table", static::$_dabaseTable);
+    self::$_dbResult = self::$_database->query("select * from :db_table");
+    self::$_dbResult->bindTable(":db_table", static::$_dabaseTable);
     if($conditions && is_array($conditions)) {
-      static::$_dbResult->appendQuery(" where");
-      Helper::addSqlConditions(static::$_dbResult, $conditions);
+      self::$_dbResult->appendQuery(" where");
+      Helper::addSqlConditions(self::$_dbResult, $conditions);
     }
-    static::$_dbResult->execute();
+    self::$_dbResult->execute();
   }
   
   protected abstract function fillFromArray($data);
@@ -55,12 +55,12 @@ abstract class DatabaseInteraction {
    * @param array $conditions conditions which will be saved
    */
   protected function SaveToDatabase($conditions) {
-    static::$_dbResult = static::$_database->query("insert into :vacancy_table set ");
-    static::$_dbResult->bindTable(":vacancy_table", static::$_databaseTable);
-    Helper::addSqlConditions(static::$_dbResult, $conditions);
-    static::$_dbResult->appendQuery(" on duplicate key update ");
-    Helper::addSqlConditions(static::$_dbResult, $conditions);
-    static::$_dbResult->execute();
+    self::$_dbResult = self::$_database->query("insert into :db_table set ");
+    self::$_dbResult->bindTable(":db_table", static::$_databaseTable);
+    Helper::addSqlConditions(self::$_dbResult, $conditions);
+    self::$_dbResult->appendQuery(" on duplicate key update ");
+    Helper::addSqlConditions(self::$_dbResult, $conditions);
+    self::$_dbResult->execute();
   }
   
   /**

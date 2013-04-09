@@ -1,5 +1,5 @@
 <?php
-
+date_default_timezone_set('Europe/Kiev');
 $config = array(
     'database' => array(
         'server' => '192.168.246.180',

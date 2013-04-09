@@ -14,6 +14,10 @@ abstract class BlockAbstract implements IBlock {
   public function process() {
     return true;
   }
+  
+  public function show(){
+    print $this->render();
+  }
 }
 
 ?>

@@ -11,13 +11,23 @@ class HeaderBlock extends BlockAbstract {
    * @return string block content
    */
   public function render() {
-    $this->content .= '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    ob_start();
+    ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
   <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <title>iLogos HR catalog</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+    <link rel="stylesheet" type="text/css" href="style/main.css">
   </head>
-  <body>';
+  <body>
+    <div class="left">&nbsp;</div>
+    <div class="right">&nbsp;</div>
+    <div class="wrapper">
+    <?php
+    $this->content .= ob_get_clean();
+    $this->content .= Block::render("Menu");
+    $this->content .= '<div class="top_bg">&nbsp;</div>';
+    $this->content .= '<div class="content">';
     return $this->content;
   }
 }

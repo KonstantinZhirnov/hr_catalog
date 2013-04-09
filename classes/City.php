@@ -24,10 +24,6 @@ class City extends DatabaseInteraction implements ISingleton {
    */
   private static $_cities = null;
   
-  public function __construct() {
-    parent::__construct();
-  }
-  
   public static function getInstance($param = null) {
     if(self::$_cities == null) {
       self::$_cities = static::getItems();
@@ -55,7 +51,7 @@ class City extends DatabaseInteraction implements ISingleton {
    * @return Qualification instance of Qualification
    */
   public static function getById($id){
-    $instance = new Qualification();
+    $instance = new City();
     $instance->getFromDB(array('id' => $id));
     
     if(static::$_dbResult->numberOfRows() > 1) {
@@ -87,6 +83,11 @@ class City extends DatabaseInteraction implements ISingleton {
       inner join :table_regions r on c.`region_id` = r.`id` ');
     $dbResult->bindTable(":table_cities", static::$_databaseTable);
     $dbResult->bindTable(":table_regions", TABLE_REGIONS);
+    
+    if(!isset($conditions['is_active'])){
+      $conditions['is_active'] = 1;
+    }
+    
     if($conditions) {
       $dbResult->appendQuery(' where');
       Helper::addSqlConditions($dbResult, $conditions);
