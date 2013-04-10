@@ -50,8 +50,7 @@ class Helper {
    * @param string $needle searched characters
    * @return bool true if string start with needle characters
    */
-  public static function startsWith($haystack, $needle)
-  {
+  public static function startsWith($haystack, $needle) {
     return !strncmp(strtolower($haystack), strtolower($needle), strlen($needle));
   }
 
@@ -61,8 +60,7 @@ class Helper {
    * @param string $needle searched characters
    * @return bool true if string end with needle characters
    */
-  public static function endsWith($haystack, $needle)
-  {
+  public static function endsWith($haystack, $needle) {
     $length = strlen($needle);
     if ($length == 0) {
         return true;
@@ -103,7 +101,7 @@ class Helper {
           $value = $value['value'];
         }
         
-        $dbResult->appendQuery(" `{$key}` {$condition} :{$key}{$separator}");
+        $dbResult->appendQuery(" {$key} {$condition} :{$key}{$separator}");
         $dbResult->bindValue(":{$key}", $value);
       }
     }

@@ -16,7 +16,7 @@ class Qualification extends DatabaseInteraction {
    * sets internal variables by data retrieved from database
    * @param array $data array of data retrieved from database
    */
-  protected function fillFromArray($data) {
+  public function fillFromArray($data) {
     if($data){
       $this->id = $data['id'];
       $this->name = $data['name'];

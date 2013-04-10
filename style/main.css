@@ -9,7 +9,7 @@
 html, body {background-color: #FFFFFF; font-family: "Myriad Pro", Arial, serif;margin:0px;padding: 0px; height: 100%;}
 .left {position:fixed; height: 100%; width: 5%; border-right: 1px solid #d9d9d9; background-color: #f2f2f2; z-index: 10;}
 .right {position:fixed; height: 100%; width: 5%; border-left: 1px solid #d9d9d9; background-color: #f2f2f2; right:0px; z-index: 10;}
-.wrapper {position: static; margin: 0px 0px 0px 5% ; }
+.wrapper {position: static; margin: 0px 0px 0px 5%;}
 .top_bg {position:fixed; background-color: #FFFFFF; height:94px; z-index: 1; width: 90%;}
 .content {padding: 94px 0px 30px 0px;}
 .menu {height: 40px; line-height: 40px; color: #ffffff; text-align: right; padding-right: 1%; background-color: #7d7d7d;position:fixed; width:89%;z-index: 2;}
@@ -24,4 +24,6 @@ th {background-color: #edf2f9; color:#218ec1;}
 .emploee th {text-align: left;}
 a{color: #218ec1}
 a:hover{text-decoration: none;}
+.edit td{background-color: #edf9f2;}
+input[text], select {width: 99.5%;}
 

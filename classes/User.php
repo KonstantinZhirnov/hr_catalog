@@ -72,7 +72,7 @@ class User {
     }
   }
   
-  private function userFill(Array $userInfo) {
+  public function userFill(Array $userInfo) {
     $roles = UserRoles::getInstance();
     
     $this->id = $userInfo['id'];

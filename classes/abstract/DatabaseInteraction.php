@@ -24,24 +24,28 @@ abstract class DatabaseInteraction {
 
 
   public function __construct() {
-     self::$_database = System::database();
+     static::$_database = System::database();
   }
   
   /**
    * get instance of object from database
    * @param array $conditions conditions for retrieve database record.
    */
-  protected function getFromDB($conditions) {
-    self::$_dbResult = self::$_database->query("select * from :db_table");
-    self::$_dbResult->bindTable(":db_table", static::$_dabaseTable);
-    if($conditions && is_array($conditions)) {
-      self::$_dbResult->appendQuery(" where");
-      Helper::addSqlConditions(self::$_dbResult, $conditions);
+  protected static function getFromDB($conditions) {
+    if(!static::$_database) {
+      static::$_database = System::database();
     }
-    self::$_dbResult->execute();
+    
+    static::$_dbResult = static::$_database->query("select * from :db_table");
+    static::$_dbResult->bindTable(":db_table", static::$_dabaseTable);
+    if($conditions && is_array($conditions)) {
+      static::$_dbResult->appendQuery(" where");
+      Helper::addSqlConditions(static::$_dbResult, $conditions);
+    }
+    static::$_dbResult->execute();
   }
   
-  protected abstract function fillFromArray($data);
+  public abstract function fillFromArray($data);
   
   public function __get($name) {
     if(!Helper::startsWith($name, "_")) {
@@ -69,22 +73,12 @@ abstract class DatabaseInteraction {
    * @return array array of finded qualifications
    */
   public static function getItems($conditions = null) {
-    $result = array();
+    static::getFromDB($conditions);
     
-    $dbResult = System::database()->query('select * from :db_table');
-    $dbResult->bindTable(":db_table", static::$_databaseTable);
-    
-    if($conditions) {
-      $dbResult->appendQuery(' where');
-      Helper::addSqlConditions($dbResult, $conditions);
-    }
-    
-    $dbResult->execute();
-    
-    while($dbResult->Next()) {
+    while(self::$_dbResult->Next()) {
       $className = get_called_class();
       $instance = new $className();
-      $data = $dbResult->toArray();
+      $data = self::$_dbResult->toArray();
       $instance->fillFromArray($data);
       $result[$instance->id] = $instance;
     }

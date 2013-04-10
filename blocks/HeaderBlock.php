@@ -18,6 +18,8 @@ class HeaderBlock extends BlockAbstract {
     <title>iLogos HR catalog</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
     <link rel="stylesheet" type="text/css" href="style/main.css">
+    <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="js/interface.js"></script>
   </head>
   <body>
     <div class="left">&nbsp;</div>
