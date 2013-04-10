@@ -25,5 +25,5 @@ th {background-color: #edf2f9; color:#218ec1;}
 a{color: #218ec1}
 a:hover{text-decoration: none;}
 .edit td{background-color: #edf9f2;}
-input[text], select {width: 99.5%;}
+input[type="text"], select {width: 99.5%;}
 
