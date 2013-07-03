@@ -4,6 +4,12 @@ require_once 'AppInit.php';
 Block::show("Header");
 ?>
 <h1 class="header">Кандидаты</h1>
+  
+<?
+Block::show("CandidatesList");
+
+?>
+<h1 class="header">Кандидаты</h1>
 <form>
   <table>
     <tr>

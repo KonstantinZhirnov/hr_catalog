@@ -2,7 +2,7 @@
 
 $config['database'] = array(
   'server' => 'localhost',
-  'name' => 'hr_database',
+  'name' => 'ilogos_ua_hr',
   'user' => 'root',
   'password' => 'root'  
 );
